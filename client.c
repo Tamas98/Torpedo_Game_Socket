@@ -117,9 +117,11 @@ restart:
 					break;
 				}else{
 					sendString(clientfd,"Your shoot was a hit");
+					printf("Your opponent destroyed your ship at: %d %d\n",row,col);
 				}
 			}else{
 				sendString(clientfd,"Your shoot was a missed shoot");
+				printf("Your opponent fired to: %d %d,but he missed!\n",row,col);
 			}
 
 			currentPlayer = 1;
