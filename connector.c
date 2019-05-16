@@ -182,19 +182,19 @@ void fillBoard(int board[10][10]){
 	}
 
 	for(int i = 0; i < 5; ++i){
-		int row;
-		int col;
+		char row;
+		char col;
 
 		printf("%d. ship: ",i+1);
-		scanf("%d %d",&row,&col);
-		if(row < 0 || row > 9 || col < 0 || col > 9){
+		scanf("%s %s",&row,&col);
+		if((int)row-48 < 0 || (int)row-48 > 9 || (int)col-48 < 0 || (int)col-48 > 9){
 			puts("Enter a number between 0 and 9 please!");			
 			--i;
-		}else if(board[row][col] == 1){
+		}else if(board[(int)row-48][(int)col-48] == 1){
 			puts("Already have ship on this location!");
 			--i;
 		}else{
-			board[row][col] = 1;
+			board[(int)row-48][(int)col-48] = 1;
 		}	
 	}
 

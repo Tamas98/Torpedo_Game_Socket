@@ -12,6 +12,7 @@ int main(int argc,char *argv[]){
 
 	int clientfd;
 	struct sockaddr_in clientAddr;
+	char on = 1;
 
 	int board[10][10];
 	char buffer[100];
@@ -27,6 +28,7 @@ int main(int argc,char *argv[]){
 		puts("[ + ] Socket created successfully\n");
 	}
 
+   	setsockopt(clientfd, SOL_SOCKET, SO_REUSEADDR, (char *)&on, sizeof on);
 	memset(&clientAddr,'0',sizeof(clientAddr));
 
 	clientAddr.sin_family = AF_INET;
@@ -68,11 +70,24 @@ restart:
 		if(currentPlayer == 1 && hitCounter < 5){
 			char row[10];
 			char col[10];
+			int correctInput = 1;
 			memset(&buffer,0,sizeof(buffer));			
 			puts("[ ! ] Give me the coordinates to fire!(rownumber colnumber)");
 			
+			while(1){
 			printf("Coordinates: ");
 			scanf("%s %s",&row,&col);
+
+				if(strcmp(row,"surrender") == 0 || strcmp(col,"surrender") == 0 ){
+					//sendString(clientfd,"end");
+					break;
+				}
+				else if((int) row[0] > 57 || (int)row[0] < 48 ||(int) col[0] > 57 || (int)col[0] < 48){
+					puts("Enter a number between 0 and 9 please");
+				}else{
+					break;
+					}
+			}
 
 			if(strcmp(row,"surrender") == 0 || strcmp(col,"surrender") == 0 ){
 				sendString(clientfd,"end");

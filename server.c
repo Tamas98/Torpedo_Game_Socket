@@ -20,6 +20,7 @@ int main(int argc,char *argv[]){
 
 	socklen_t serverSize;
 	char buffer[BUFSIZE] = {};
+	char on = 1;
 
 	serverfd = socket(AF_INET,SOCK_STREAM,0);
 	if(serverfd < 0){
@@ -28,7 +29,8 @@ int main(int argc,char *argv[]){
 	}else{
 		puts("[ + ] Socket created successfully\n");
 	}
-
+	
+	setsockopt(serverfd, SOL_SOCKET, SO_REUSEADDR, (char *)&on, sizeof on);
 	memset(&serverAddr,'0',sizeof(serverAddr));
 
 	serverAddr.sin_family = AF_INET;
